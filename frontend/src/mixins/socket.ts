@@ -1,13 +1,13 @@
 import { io } from "socket.io-client";
 import { Socket } from "socket.io-client";
 import { defineComponent } from "vue";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { Terminal } from "@xterm/xterm";
 import { AgentSocket } from "../../../common/agent-socket";
 
-let socket : Socket;
+let socket: Socket;
 
-let terminalMap : Map<string, Terminal> = new Map();
+let terminalMap: Map<string, Terminal> = new Map();
 
 export default defineComponent({
     data() {
@@ -54,7 +54,7 @@ export default defineComponent({
         },
 
         completeStackList() {
-            let list : Record<string, object> = {};
+            let list: Record<string, object> = {};
 
             for (let stackName in this.stackList) {
                 list[stackName + "_"] = this.stackList[stackName];
@@ -130,7 +130,7 @@ export default defineComponent({
     },
     methods: {
 
-        endpointDisplayFunction(endpoint : string) {
+        endpointDisplayFunction(endpoint: string) {
             if (endpoint) {
                 return endpoint;
             } else {
@@ -150,7 +150,7 @@ export default defineComponent({
             }
 
             this.socketIO.initedSocketIO = true;
-            let url : string;
+            let url: string;
             const env = process.env.NODE_ENV || "production";
             if (env === "development" || localStorage.dev === "dev") {
                 url = location.protocol + "//" + location.hostname + ":5001";
@@ -166,7 +166,7 @@ export default defineComponent({
 
             // Handling events from agents
             let agentSocket = new AgentSocket();
-            socket.on("agent", (eventName : unknown, ...args : unknown[]) => {
+            socket.on("agent", (eventName: unknown, ...args: unknown[]) => {
                 agentSocket.call(eventName, ...args);
             });
 
@@ -188,7 +188,7 @@ export default defineComponent({
                     } else {
                         // Timeout if it is not actually auto login
                         setTimeout(() => {
-                            if (! this.loggedIn) {
+                            if (!this.loggedIn) {
                                 this.allowLoginDialog = true;
                                 this.storage().removeItem("token");
                             }
@@ -294,15 +294,15 @@ export default defineComponent({
          * The storage currently in use
          * @returns Current storage
          */
-        storage() : Storage {
+        storage(): Storage {
             return (this.remember) ? localStorage : sessionStorage;
         },
 
-        getSocket() : Socket {
+        getSocket(): Socket {
             return socket;
         },
 
-        emitAgent(endpoint : string, eventName : string, ...args : unknown[]) {
+        emitAgent(endpoint: string, eventName: string, ...args: unknown[]) {
             this.getSocket().emit("agent", endpoint, eventName, ...args);
         },
 
@@ -327,7 +327,7 @@ export default defineComponent({
          * @param {loginCB} callback Callback to call with result
          * @returns {void}
          */
-        login(username : string, password : string, token : string, callback) {
+        login(username: string, password: string, token: string, callback) {
             this.getSocket().emit("login", {
                 username,
                 password,
@@ -358,11 +358,11 @@ export default defineComponent({
          * @param {string} token Token to log in with
          * @returns {void}
          */
-        loginByToken(token : string) {
+        loginByToken(token: string) {
             socket.emit("loginByToken", token, (res) => {
                 this.allowLoginDialog = true;
 
-                if (! res.ok) {
+                if (!res.ok) {
                     this.logout();
                 } else {
                     this.loggedIn = true;
@@ -396,7 +396,7 @@ export default defineComponent({
 
         },
 
-        bindTerminal(endpoint : string, terminalName : string, terminal : Terminal) {
+        bindTerminal(endpoint: string, terminalName: string, terminal: Terminal) {
             // Load terminal, get terminal screen
             this.emitAgent(endpoint, "terminalJoin", terminalName, (res) => {
                 if (res.ok) {
@@ -408,7 +408,7 @@ export default defineComponent({
             });
         },
 
-        unbindTerminal(terminalName : string) {
+        unbindTerminal(terminalName: string) {
             terminalMap.delete(terminalName);
         },
 

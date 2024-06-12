@@ -162,3 +162,6 @@ Yes, you can.
 ## Others
 
 Dockge is built on top of [Compose V2](https://docs.docker.com/compose/migrate/). `compose.yaml`  also known as `docker-compose.yml`.
+
+
+docker compose down --rmi all --volumes --remove-orphans

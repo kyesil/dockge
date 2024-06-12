@@ -9,4 +9,5 @@ tmp
 
 # Git only
 frontend-dist
-
+pnpm-lock.yaml
+.pnpm-store
