@@ -1,5 +1,5 @@
 import { log } from "./log";
-import compareVersions from "compare-versions";
+import * as compareVersions from "compare-versions";
 import packageJSON from "../package.json";
 import { Settings } from "./settings";
 
