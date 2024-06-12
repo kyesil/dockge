@@ -1,6 +1,6 @@
 import { DockgeServer } from "./dockge-server";
 import * as os from "node:os";
-import * as pty from "./botchUpPty.ts";
+import * as pty from "@homebridge/node-pty-prebuilt-multiarch";
 import { LimitQueue } from "./utils/limit-queue";
 import { DockgeSocket } from "./util-server";
 import {

@@ -1,3 +1,3 @@
 #!/bin/sh
-pnpm i  --force
-pnpm run dev
+npm i  --force
+npm run dev

@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 import knex from "knex";
 
+
 import { sleep } from "../common/util-common";
 
 interface DBConfig {
@@ -106,8 +107,9 @@ export class Database {
         if (dbConfig.type === "sqlite") {
             this.sqlitePath = path.join(this.server.config.dataDir, "dockge.db");
 
+
             config = {
-                client: "sqlite",
+                client: "sqlite3",
                 connection: {
                     filename: Database.sqlitePath,
                     acquireConnectionTimeout: acquireConnectionTimeout,

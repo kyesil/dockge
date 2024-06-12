@@ -2,24 +2,19 @@
     "name": "dockge",
     "version": "1.4.2",
     "type": "module",
-    "engines": {
-        "node": ">= 18.0.0 && <= 18.17.1"
-    },
     "scripts": {
         "fmt": "eslint \"**/*.{ts,vue}\" --fix",
         "lint": "eslint \"**/*.{ts,vue}\"",
         "check-ts": "tsc --noEmit",
         "start": "tsx ./backend/index.ts",
-        "nexe-build": "nexe ./backend/index.ts --build",
-        "build_bin": "bun build --compile --minify --sourcemap --target=bun-linux-arm64 ./backend/index.ts --outfile myapp",
-        "dev": "concurrently -k -r \"wait-on tcp:5000 && pnpm run dev:backend \" \"pnpm run dev:frontend\"",
+        "dev": "concurrently -k -r \"wait-on tcp:5000 && npm run dev:backend \" \"npm run dev:frontend\"",
         "dev:backend": "cross-env NODE_ENV=development tsx watch --inspect ./backend/index.ts",
         "dev:frontend": "cross-env NODE_ENV=development vite --host --config ./frontend/vite.config.ts",
         "release-final": "tsx ./extra/test-docker.ts && tsx extra/update-version.ts && pnpm run build:frontend && npm run build:docker",
         "release-beta": "tsx ./extra/test-docker.ts && tsx extra/update-version.ts && pnpm run build:frontend && npm run build:docker-beta",
         "build:frontend": "vite build --config ./frontend/vite.config.ts",
         "build:docker-base": "docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t louislam/dockge:base -f ./docker/Base.Dockerfile . --push",
-        "build:docker": "node ./extra/env2arg.js docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t louislam/dockge:latest -t louislam/dockge:1 -t louislam/dockge:$VERSION -t louislam/dockge:beta -t louislam/dockge:nightly --target release -f ./docker/Dockerfile . --push",
+        "build:docker": "node .pnpm slam/dockge:latest -t louislam/dockge:1 -t louislam/dockge:$VERSION -t louislam/dockge:beta -t louislam/dockge:nightly --target release -f ./docker/Dockerfile . --push",
         "build:docker-beta": "node ./extra/env2arg.js docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t louislam/dockge:beta -t louislam/dockge:$VERSION --target release -f ./docker/Dockerfile . --push",
         "build:docker-nightly": "pnpm run build:frontend && docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t louislam/dockge:nightly --target nightly -f ./docker/Dockerfile . --push",
         "build:healthcheck": "docker buildx build -f docker/BuildHealthCheck.Dockerfile --platform linux/amd64,linux/arm64,linux/arm/v7 -t louislam/dockge:build-healthcheck . --push",
@@ -29,7 +24,7 @@
         "reset-password": "tsx ./extra/reset-password.ts"
     },
     "dependencies": {
-        "@homebridge/node-pty-prebuilt-multiarch": "~0.11.14-beta.1",
+        "@homebridge/node-pty-prebuilt-multiarch": "~0.11.14",
         "@inventage/envsubst": "^0.17.0",
         "bcryptjs": "~2.4.3",
         "check-password-strength": "~2.0.10",
@@ -41,7 +36,6 @@
         "dotenv": "~16.4.5",
         "express": "~4.19.2",
         "express-static-gzip": "~2.1.7",
-        "homebridge": "",
         "http-graceful-shutdown": "~3.1.13",
         "jsonwebtoken": "~9.0.2",
         "jwt-decode": "~4.0.0",
@@ -86,7 +80,6 @@
         "eslint": "~8.56.0",
         "eslint-plugin-jsdoc": "~48.2.6",
         "eslint-plugin-vue": "~9.26.0",
-        "nexe": "4.0.0-rc.6",
         "prismjs": "~1.29.0",
         "sass": "~1.77.2",
         "tsx": "^4.11.0",
@@ -101,7 +94,6 @@
         "vue-qrcode": "~2.2.2",
         "vue-router": "~4.3.2",
         "vue-toastification": "2.0.0-rc.5",
-        "wait-on": "^7.2.0",
-        "xterm-addon-web-links": "~0.9.0"
+        "wait-on": "^7.2.0"
     }
 }

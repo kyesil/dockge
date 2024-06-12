@@ -11,3 +11,4 @@ tmp
 frontend-dist
 pnpm-lock.yaml
 .pnpm-store
+package-lock.json

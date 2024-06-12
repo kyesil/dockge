@@ -4,7 +4,7 @@ RUN mkdir /app
 WORKDIR /app
 RUN apk add --no-cache nodejs npm  bash util-linux curl --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community/
 
-RUN npm i -g pnpm concurrently npm-check-updates
+RUN npm i -g concurrently
 
 COPY ./*.sh /
 RUN chmod 777 /*.sh
